@@ -5,8 +5,6 @@ class TodoItem{
         this.is_active = isActive;
         this.__id = id;
         this.__host = "http://localhost:8000";
-              
-
     }
 
 __createHtmlElement()
@@ -31,10 +29,8 @@ __createHtmlElement()
 
     this.htmlElement=div;
 
-    // this.__id = id;
-    debugger
-
     deleteSpan.onclick=this.remove.bind(this);
+    checkboxInput.onclick = this.changeTaskStatus.bind(this);
 
 }
 
@@ -80,7 +76,6 @@ getHtmlElement()
 remove(){
     this.__sendDeleteRequest();
 }
-
 __sendDeleteRequest(){
     const title = this.title;
     $.ajax({
@@ -95,6 +90,29 @@ __sendDeleteRequest(){
             console.log(status);
         }
         });
+}
+
+changeTaskStatus(){
+    this.__sendChangeStatusRequest();
+}
+
+__sendChangeStatusRequest(){
+    const title = this.title;
+    $.ajax({
+        url:this.__host+'/api/task/'+this.__id+'/',
+        method: 'PUT',
+        data: {
+            title: this.title,
+            description: 'empty',
+            is_active: !this.is_active
+        },
+        success: (tasks,status) => {
+        },
+        error: function (response, status){
+            console.log(response);
+            console.log(status);
+        }
+    });
 }
 }
 
