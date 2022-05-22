@@ -1,0 +1,39 @@
+
+.todo-app_body{
+    position: relative;
+       
+}
+.todo-app_item{
+    position: absolute;
+    top: 5%;
+    height:20px;
+    margin: 10px auto;
+    width:80%;
+    background: #ff9640;
+    border-radius: 10px;
+
+}
+
+.todo-item{
+    position: relative;
+}
+
+.todo-item_text{
+    color: white;
+    font-weight: bold;
+}
+.todo-item_delete{
+    position: absolute;
+    right:5%;
+    color: white;
+    font-weight: bold;
+    cursor: pointer;
+}
+.todo-item__checkbox{
+    background: transparent;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    align-items: center;
+    margin: 5px 5px 5px 5px;
+}

@@ -1,16 +1,23 @@
 class TodoItem{
-    constructor(title,id)
+    constructor(title,isActive,id)
     {
         this.title=title;
-        this.__createHtmlElement()
-        this.__host = "http://localhost:8000";
+        this.is_active = isActive;
         this.__id = id;
+        this.__host = "http://localhost:8000";
+              
+
     }
 
-__createHtmlElement(pk)
+__createHtmlElement()
 {
     const div=document.createElement('div')
     div.className="todo-app_item todo-item"
+
+    const checkboxInput = document.createElement("input");
+    checkboxInput.className = "todo-item__checkbox";
+    checkboxInput.type = "checkbox";
+    checkboxInput.checked = this.is_active;
 
     const titleSpan=document.createElement('span')
     titleSpan.className="todo-item_text";
@@ -20,11 +27,12 @@ __createHtmlElement(pk)
     deleteSpan.className="todo-item_delete";
     deleteSpan.innerText='x';
 
-    div.append(titleSpan,deleteSpan)
+    div.append(checkboxInput,titleSpan,deleteSpan)
 
     this.htmlElement=div;
 
-    this.__id = pk;
+    // this.__id = id;
+    debugger
 
     deleteSpan.onclick=this.remove.bind(this);
 
@@ -45,10 +53,13 @@ __sendCreateRequest(body){
             is_active: true
         },
         success: (response) => {
-            this.__createHtmlElement(response);
+            debugger
+            this.__id=response
+            this.__createHtmlElement();
             body.append(this.getHtmlElement());
         },
         error: function (response, status){
+            debugger
             console.log(response);
             console.log(status);
         }
@@ -57,7 +68,9 @@ __sendCreateRequest(body){
 
 getHtmlElement()
 {
+    this.__createHtmlElement()
     return this.htmlElement;
+    
 }
 
 // remove(){
