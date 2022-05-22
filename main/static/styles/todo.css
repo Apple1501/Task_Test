@@ -30,14 +30,8 @@ background:snow;
     margin: auto;
 }
 
-
 .todo-app_title{
     font-weight: bold;
-}
-
-.todo-app_body{
-    position: relative;
-       
 }
 
 /* полоса прокрутки (скроллбар) */

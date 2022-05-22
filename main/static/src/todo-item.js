@@ -69,10 +69,6 @@ getHtmlElement()
     
 }
 
-// remove(){
-//     this.htmlElement.remove();
-// }
-
 remove(){
     this.__sendDeleteRequest();
 }
