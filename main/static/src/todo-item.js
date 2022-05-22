@@ -15,7 +15,7 @@ __createHtmlElement()
     const checkboxInput = document.createElement("input");
     checkboxInput.className = "todo-item__checkbox";
     checkboxInput.type = "checkbox";
-    checkboxInput.checked = this.is_active;
+    checkboxInput.checked = !this.is_active;
 
     const titleSpan=document.createElement('span')
     titleSpan.className="todo-item_text";

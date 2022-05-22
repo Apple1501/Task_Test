@@ -1,15 +1,14 @@
 window.onload=function()
 {
-    function fetchTasks(){
+    function fetchTasks(filter){
         const host = "http://localhost:8000";
         $.ajax({
             url:host+'/api/task/',
             method: 'GET',
             data: {},
             success: function (tasks,status){
-                renderTasks(tasks);
-                console.log(tasks);
-                //printCountTasks(counterField,todoItemCheckbox);
+                renderTasks(tasks, filter);
+                printCountTasks(counterField,todoItemCheckbox);
             },
             error: function (response, status){
                 console.log(response);
@@ -19,15 +18,59 @@ window.onload=function()
     }
 
 
-    function renderTasks(tasks,status){
+    function filterTasks(tasks,status){
         for(let i=0; i < tasks.length; i++) {
-            const todoItem = new TodoItem(tasks[i].title, tasks[i].is_active, tasks[i].id);
+            if(tasks[i].is_active == status){
+                const todoItem = new TodoItem(tasks[i].title, tasks[i].is_active, tasks[i].id);
                 todoBody.append(todoItem.getHtmlElement());
-                        
+            }
+            if(status == 'nothing'){
+                const todoItem = new TodoItem(tasks[i].title, tasks[i].is_active, tasks[i].id);
+                todoBody.append(todoItem.getHtmlElement());
+            }
         }
     }
 
-   
+    function renderTasks(tasks, filter) {
+        switch(filter){
+            case 'completed':
+                filterTasks(tasks,false);
+                break;
+            case 'active':
+                filterTasks(tasks,true);
+                break;
+            case 'all':
+                filterTasks(tasks,'nothing');
+                break;
+        }
+    }
+
+    function countTasks(todoItemCheckboxes){
+        let activeTasksCount = 0;
+        let allTasksCount = 0;
+        activeTasksCount = Object.values(todoItemCheckboxes).filter(todoItemCheckbox=>todoItemCheckbox.checked == false).length;
+        allTasksCount = todoItemCheckboxes.length;
+        return [activeTasksCount,allTasksCount]
+    }
+
+    function printCountTasks(counterField,todoItemCheckbox){
+        [activeTasks, allTasks] = countTasks(todoItemCheckbox);
+        counterField.innerText = 'Active tasks: '+ activeTasks +'/'+ allTasks;
+    }
+
+    function cleanAllTasks(){
+        while(todoBody.children.length) {
+            todoBody.removeChild(todoBody.children[0])
+        }
+    }
+
+    function switchActiveStatus(FilterButton){
+        allFilterButton.classList.remove("active");
+        activeFilterButton.classList.remove("active");
+        completedFilterButton.classList.remove("active");
+        FilterButton.classList.add("active");
+        cleanAllTasks();
+    }
 const addButton=document.getElementsByClassName("search_button")[0]
 const inputField=this.document.getElementsByClassName("search_input")[0]
 const todoBody=document.getElementsByClassName("todo-app_body")[0]
@@ -38,12 +81,31 @@ const activeFilterButton = document.getElementsByClassName('filter-active')[0];
 const completedFilterButton = document.getElementsByClassName('filter-completed')[0];
 // сonst statusField = document.getElementsByClassName('menu__status')[0];
 
-fetchTasks();
+fetchTasks('all');
 
 addButton.onclick=()=>{
     const todo  = new TodoItem(inputField.value,true);
     todo.createTodoItem(todoBody);
+    printCountTasks(counterField,todoItemCheckbox);
          
+}
+
+allFilterButton.onclick = ()=>{
+    switchActiveStatus(allFilterButton);
+    fetchTasks('all');
+    printCountTasks(counterField,todoItemCheckbox);
+}
+
+activeFilterButton.onclick = ()=>{
+    switchActiveStatus(activeFilterButton);
+    fetchTasks('active');
+    printCountTasks(counterField,todoItemCheckbox);
+}
+
+completedFilterButton.onclick = ()=>{
+    switchActiveStatus(completedFilterButton);
+    fetchTasks('completed');
+    printCountTasks(counterField,todoItemCheckbox);
 }
 
 }
