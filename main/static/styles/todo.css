@@ -21,7 +21,7 @@ background:snow;
 }
 .todo-app_body{
     height: 80%;
-    border-radius: 25px 25px 0 0;
+    border-radius: 25px 0 0 0;
     background: beige;
     overflow: auto; /*Задачи не выходят за границы приложения*/
 }

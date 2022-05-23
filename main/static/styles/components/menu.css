@@ -9,7 +9,7 @@
     background: white;
 }
 .menu__counter{
-    font-style: oblique;
+    font-style: italic;
     margin: auto;
     border: none;
     text-align: left;
@@ -17,7 +17,7 @@
     vertical-align: middle;
 } 
 .menu__filter{
-    font-style: oblique;
+    font-style: italic;
     border: none;
     margin: auto;
     text-align: right;
@@ -35,11 +35,3 @@
     outline: 1px solid #e2e1e1;
     border-radius: 3px;
 }
-.menu__status{
-    font-style: oblique;
-    margin: auto;
-    border: none;
-    text-align: right;
-    align-items: center;
-    vertical-align: middle;
-} 

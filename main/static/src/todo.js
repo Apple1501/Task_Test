@@ -46,16 +46,14 @@ window.onload=function()
     }
 
     function countTasks(todoItemCheckboxes){
-        let activeTasksCount = 0;
         let allTasksCount = 0;
-        activeTasksCount = Object.values(todoItemCheckboxes).filter(todoItemCheckbox=>todoItemCheckbox.checked == false).length;
         allTasksCount = todoItemCheckboxes.length;
-        return [activeTasksCount,allTasksCount]
+        return allTasksCount
     }
 
     function printCountTasks(counterField,todoItemCheckbox){
-        [activeTasks, allTasks] = countTasks(todoItemCheckbox);
-        counterField.innerText = 'Active tasks: '+ activeTasks +'/'+ allTasks;
+        allTasks = countTasks(todoItemCheckbox);
+        counterField.innerText = 'Tasks: '+ allTasks;
     }
 
     function cleanAllTasks(){
@@ -79,15 +77,19 @@ const counterField = document.getElementsByClassName("menu__counter")[0];
 const allFilterButton = document.getElementsByClassName('filter-all')[0];
 const activeFilterButton = document.getElementsByClassName('filter-active')[0];
 const completedFilterButton = document.getElementsByClassName('filter-completed')[0];
-// сonst statusField = document.getElementsByClassName('menu__status')[0];
 
 fetchTasks('all');
+
 
 addButton.onclick=()=>{
     const todo  = new TodoItem(inputField.value,true);
     todo.createTodoItem(todoBody);
     printCountTasks(counterField,todoItemCheckbox);
          
+}
+
+todoBody.onchange = () => {
+    printCountTasks(counterField,todoItemCheckbox);
 }
 
 allFilterButton.onclick = ()=>{
