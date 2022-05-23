@@ -1,0 +1,52 @@
+@import "components.css";
+
+body {
+background:snow;
+}
+.todo-app{
+    width:30%;
+    height:60vh;
+    margin-top: auto;
+    margin-right: auto;
+    margin-left: auto;
+    margin-bottom: auto;
+    padding:0;
+    background: #ff7400;
+    
+}
+.todo-app_header {
+    height: 20%;
+    text-align: center;
+
+}
+.todo-app_body{
+    height: 80%;
+    border-radius: 25px 0 0 0;
+    background: beige;
+    overflow: auto; /*Задачи не выходят за границы приложения*/
+}
+
+.todo-app_search{
+    margin: auto;
+}
+
+.todo-app_title{
+    font-weight: bold;
+}
+
+/* полоса прокрутки (скроллбар) */
+::-webkit-scrollbar {
+    width: 8px; /* ширина для вертикального скролла */
+    height: 10px; /* высота для горизонтального скролла */
+    background-color: #CD4F4F;
+}
+
+/* ползунок скроллбара */
+::-webkit-scrollbar-thumb {
+    background-color:#E6C3C3;
+    border-radius: 2em;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background-color: #444;
+}

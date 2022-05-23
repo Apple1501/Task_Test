@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="../../static/styles/todo.css">
+    <script src="../../static/src/todo-item.js"></script>
+    <script src="../../static/src/todo.js"></script>
+</head>
+<body>
+<div class="todo-app">
+    <div class="todo-app_header">
+        <div class="todo-app_title">Задачи</div>
+        <div class="todo-app_search search">
+            <input type="text" class="search_input" placeholder="Добавь задачу">
+            <button class="search_button">Добавить</button>
+        </div>
+    </div>
+    <div class="todo-app_body"></div>
+    <div class = "todo__menu menu">
+        <span class = "menu__counter">items left</span>
+        <div class = "menu__filter menu-filter" >
+            <button class = "menu-filter__button filter-all">All</button>
+            <button class = "menu-filter__button filter-active">Active</button>
+            <button class = "menu-filter__button filter-completed">Completed</button>
+        </div>
+    </div>    
+    
+</div>
+</body>
+</html>
