@@ -1,30 +1,31 @@
-window.onload=function()
-{
-    function fetchTasks(filter){
+window.onload = function () {
+    const todoItemCheckbox = document.getElementsByClassName('todo-item__checkbox');
+    
+    function fetchTasks(filter) {
         const host = "http://localhost:8000";
         $.ajax({
-            url:host+'/api/task/',
+            url: host + '/api/task/',
             method: 'GET',
             data: {},
-            success: function (tasks,status){
+            success: function (tasks, status) {
                 renderTasks(tasks, filter);
-                printCountTasks(counterField,todoItemCheckbox);
+                printCountTasks();
             },
-            error: function (response, status){
+            error: function (response, status) {
                 console.log(response);
                 console.log(status);
             }
-            });
+        });
     }
 
 
-    function filterTasks(tasks,status){
-        for(let i=0; i < tasks.length; i++) {
-            if(tasks[i].is_active == status){
+    function filterTasks(tasks, status) {
+        for (let i = 0; i < tasks.length; i++) {
+            if (tasks[i].is_active == status) {
                 const todoItem = new TodoItem(tasks[i].title, tasks[i].is_active, tasks[i].id);
                 todoBody.append(todoItem.getHtmlElement());
             }
-            if(status == 'nothing'){
+            if (status == 'nothing') {
                 const todoItem = new TodoItem(tasks[i].title, tasks[i].is_active, tasks[i].id);
                 todoBody.append(todoItem.getHtmlElement());
             }
@@ -32,15 +33,15 @@ window.onload=function()
     }
 
     function renderTasks(tasks, filter) {
-        switch(filter){
+        switch (filter) {
             case 'completed':
-                filterTasks(tasks,false);
+                filterTasks(tasks, false);
                 break;
             case 'active':
-                filterTasks(tasks,true);
+                filterTasks(tasks, true);
                 break;
             case 'all':
-                filterTasks(tasks,'nothing');
+                filterTasks(tasks, 'nothing');
                 break;
         }
     }
@@ -51,28 +52,29 @@ window.onload=function()
         return allTasksCount
     }
 
-    function printCountTasks(counterField,todoItemCheckbox){
+    function printCountTasks(){
+        const todoItemCheckbox = document.getElementsByClassName('todo-item__checkbox');
+        const counterField = document.getElementsByClassName("menu__counter")[0];
         allTasks = countTasks(todoItemCheckbox);
         counterField.innerText = 'Tasks: '+ allTasks;
-    }
+ }
 
-    function cleanAllTasks(){
-        while(todoBody.children.length) {
-            todoBody.removeChild(todoBody.children[0])
-        }
+function cleanAllTasks() {
+    while (todoBody.children.length) {
+        todoBody.removeChild(todoBody.children[0])
     }
+}
 
-    function switchActiveStatus(FilterButton){
-        allFilterButton.classList.remove("active");
-        activeFilterButton.classList.remove("active");
-        completedFilterButton.classList.remove("active");
-        FilterButton.classList.add("active");
-        cleanAllTasks();
-    }
-const addButton=document.getElementsByClassName("search_button")[0]
-const inputField=this.document.getElementsByClassName("search_input")[0]
-const todoBody=document.getElementsByClassName("todo-app_body")[0]
-const todoItemCheckbox = document.getElementsByClassName('todo-item__checkbox');
+function switchActiveStatus(FilterButton) {
+    allFilterButton.classList.remove("active");
+    activeFilterButton.classList.remove("active");
+    completedFilterButton.classList.remove("active");
+    FilterButton.classList.add("active");
+    cleanAllTasks();
+}
+const addButton = document.getElementsByClassName("search_button")[0]
+const inputField = this.document.getElementsByClassName("search_input")[0]
+const todoBody = document.getElementsByClassName("todo-app_body")[0]
 const counterField = document.getElementsByClassName("menu__counter")[0];
 const allFilterButton = document.getElementsByClassName('filter-all')[0];
 const activeFilterButton = document.getElementsByClassName('filter-active')[0];
@@ -81,33 +83,34 @@ const completedFilterButton = document.getElementsByClassName('filter-completed'
 fetchTasks('all');
 
 
-addButton.onclick=()=>{
-    const todo  = new TodoItem(inputField.value,true);
-    todo.createTodoItem(todoBody);
-    printCountTasks(counterField,todoItemCheckbox);
-         
+addButton.onclick = () => {
+    if (inputField != "") {
+        const todo = new TodoItem(inputField.value, true);
+        todo.createTodoItem(todoBody);
+        inputField.value = "";
+    }
+
 }
 
 todoBody.onchange = () => {
-    printCountTasks(counterField,todoItemCheckbox);
+    printCountTasks();
 }
 
-allFilterButton.onclick = ()=>{
+
+allFilterButton.onclick = () => {
     switchActiveStatus(allFilterButton);
     fetchTasks('all');
-    printCountTasks(counterField,todoItemCheckbox);
 }
 
-activeFilterButton.onclick = ()=>{
+activeFilterButton.onclick = () => {
     switchActiveStatus(activeFilterButton);
     fetchTasks('active');
-    printCountTasks(counterField,todoItemCheckbox);
+
 }
 
-completedFilterButton.onclick = ()=>{
+completedFilterButton.onclick = () => {
     switchActiveStatus(completedFilterButton);
     fetchTasks('completed');
-    printCountTasks(counterField,todoItemCheckbox);
 }
 
 }

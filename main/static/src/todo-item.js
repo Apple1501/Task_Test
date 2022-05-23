@@ -1,3 +1,16 @@
+function countTasks(){
+    const todoItemCheckbox = document.getElementsByClassName('todo-item__checkbox');
+    let allTasksCount = 0;
+    allTasksCount = todoItemCheckbox.length;
+    return allTasksCount
+}
+
+function printCountTasks(){
+    const counterField = document.getElementsByClassName("menu__counter")[0];
+    allTasks = countTasks();
+    counterField.innerText = 'Tasks: '+ allTasks;
+}
+
 class TodoItem{
     constructor(title,isActive,id)
     {
@@ -51,8 +64,8 @@ __sendCreateRequest(body){
         success: (response) => {
             debugger
             this.__id=response
-            this.__createHtmlElement();
             body.append(this.getHtmlElement());
+            printCountTasks();
         },
         error: function (response, status){
             debugger
@@ -66,7 +79,7 @@ getHtmlElement()
 {
     this.__createHtmlElement()
     return this.htmlElement;
-    
+        
 }
 
 remove(){
@@ -80,6 +93,7 @@ __sendDeleteRequest(){
         data: {},
         success: (tasks,status) => {
             this.htmlElement.remove();
+            printCountTasks();
         },
         error: function (response, status){
             console.log(response);
